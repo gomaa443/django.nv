@@ -29,7 +29,7 @@ jobs:
       - run: echo "This is a deploy step"
       
   artifact:
-    runs-on: ubuntu-22.04.04
+    runs-on: ubuntu-22.04
     steps:
       - run : echo "hello" > hello.txt  
       - uses: actions/upload-artifact@v4
@@ -38,10 +38,10 @@ jobs:
           path: hello.txt
 
   verifyArtifact:
-    runs-on: ubuntu-22.04.04
+    runs-on: ubuntu-22.04
     needs: artifact 
     steps:
-      - uses: actions/upload-artifact@v4
+      - uses: actions/download-artifact@v4
         with:
           name: my-artifact
       - run: cat hello.txt
