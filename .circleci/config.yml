@@ -34,14 +34,21 @@ jobs:
       - checkout
       - run: echo "This is a deploy step."
 
-workflows:
-  version: 2
-  django:
-    jobs:
-      - build
-      - test
-      - integration
-      - prod:
-          type: approval
-          requires:
-            - integration
+  workflows:
+    version: 2
+    django:
+      jobs:
+        - build
+        - test:
+            requires:
+              - build
+        - oast-frontend:
+            requires:
+              - test
+        - integration:
+            requires:
+              - oast-frontend
+        - prod:
+            type: approval
+            requires:
+              - integration
